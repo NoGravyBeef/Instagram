@@ -3,6 +3,7 @@ import 'package:instagram/pages/home_page.dart';
 import './style.dart' as themefile;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter/rendering.dart';
 
 void main() {
   runApp(
@@ -22,6 +23,29 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var page = 0;
+  var data = [];
+
+  addData(a) {
+    setState(() {
+      data.add(a);
+    });
+  }
+
+  getdata() async {
+    var getresult = await http
+        .get(Uri.parse('https://codingapple1.github.io/app/data.json'));
+    var decodedresult = jsonDecode(getresult.body);
+    setState(() {
+      data = decodedresult;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getdata();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +62,7 @@ class _MyAppState extends State<MyApp> {
               iconSize: 30),
         ],
       ),
-      body: [const HomePage(), const Text('샵페이지')][page],
+      body: [HomePage(data: data), const Text('샵페이지')][page],
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
