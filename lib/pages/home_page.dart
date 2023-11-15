@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:instagram/main.dart' as main;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, this.data});
+  const HomePage({
+    super.key,
+    this.data,
+    this.addData,
+  });
   final dynamic data;
+  final dynamic addData;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -18,6 +22,7 @@ class _HomePageState extends State<HomePage> {
     var result = await http
         .get(Uri.parse('https://codingapple1.github.io/app/more1.json'));
     var result2 = jsonDecode(result.body);
+    widget.addData(result2);
   }
 
   @override
@@ -35,12 +40,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     if (widget.data.isNotEmpty) {
       return ListView.builder(
-        itemCount: 3,
+        itemCount: widget.data.length,
         controller: scroll,
         itemBuilder: (c, i) {
           return Column(
             children: [
-              Image.network(widget.data[i]['image']),
+              widget.data[i]['image'].runtimeType == String
+                  ? Image.network(widget.data[i]['image'])
+                  : Image.file(widget.data[i]['image']),
               Text('좋아요: ${widget.data[i]['likes']}'),
               Text(widget.data[i]['user']),
               Text(widget.data[i]['content']),
