@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(
@@ -68,10 +69,18 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  saveData() async {
+    var storage = await SharedPreferences.getInstance();
+    //storage.setStringList('데이터들', );
+    var result = storage.getString('데이터들') ?? '없는데요?';
+    print(jsonDecode(result)['age']);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    saveData();
     getdata();
   }
 
