@@ -12,5 +12,4 @@ var theme = ThemeData(
     titleTextStyle: TextStyle(color: Colors.black),
     actionsIconTheme: IconThemeData(color: Colors.black),
   ),
-  textTheme: const TextTheme(bodyMedium: TextStyle(color: Colors.red)),
 );
