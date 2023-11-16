@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:instagram/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -48,8 +50,14 @@ class _HomePageState extends State<HomePage> {
               widget.data[i]['image'].runtimeType == String
                   ? Image.network(widget.data[i]['image'])
                   : Image.file(widget.data[i]['image']),
+              GestureDetector(
+                child: Text(widget.data[i]['user']),
+                onTap: () {
+                  Navigator.push(context,
+                      CupertinoPageRoute(builder: (c) => const Profile()));
+                },
+              ),
               Text('좋아요: ${widget.data[i]['likes']}'),
-              Text(widget.data[i]['user']),
               Text(widget.data[i]['content']),
             ],
           );

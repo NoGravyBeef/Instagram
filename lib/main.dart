@@ -73,7 +73,6 @@ class _MyAppState extends State<MyApp> {
     var storage = await SharedPreferences.getInstance();
     //storage.setStringList('데이터들', );
     var result = storage.getString('데이터들') ?? '없는데요?';
-    print(jsonDecode(result)['age']);
   }
 
   @override
